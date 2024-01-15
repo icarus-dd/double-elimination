@@ -9,3 +9,7 @@ class DuplicatePlayerError(Exception):
 
 class BracketPlayerCount(Warning):
     pass
+
+
+class BracketAssignmentError(Exception):
+    pass

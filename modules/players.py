@@ -18,10 +18,10 @@ class Player:
     brktELIMINATION = 1
     brktOUT = 0
 
-    def __init__(self, player_name):
-        self.PlayerName = player_name
+    def __init__(self, player_name: str):
+        self.PlayerName: str = player_name
         self.PlayerBracket = None
-        self.PlayerRecord = [None]
+        self.PlayerRecord: list[dict] = [None]
 
     def __eq__(self, other):
         return self.PlayerName == other.PlayerName and \
@@ -33,10 +33,13 @@ class Player:
             self.PlayerRecord == other.PlayerRecord and \
             self.PlayerBracket == other.PlayerBracket
 
-    def tally_result(self, result, opponent, round_number, match_number):
-        _result = dict(Result=result, Opponent=opponent, Round=round_number, Match=match_number)
+    def __str__(self):
+        return self.PlayerName
 
-        self.PlayerRecord.append(_result)
+    def tally_result(self, result, opponent, round_number, match_number):
+        __result = dict(Result=result, Opponent=opponent, Round=round_number, Match=match_number)
+
+        self.PlayerRecord.append(__result)
 
         if result == self.resBUY or result == self.resWIN:
             return
