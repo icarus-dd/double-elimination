@@ -33,7 +33,7 @@ class TestMatchesAndBuys(unittest.TestCase):
         _roster.add_player(self.player_Sarah)
         _bracket.set_round_roster(_roster)
 
-        self.assertEqual(_bracket.BracketRoster.Players[0].PlayerName, "Mary", "Bracket Roster Update")
+        self.assertEqual(_bracket.bracket_roster.players[0].player_name, "Mary", "Bracket Roster Update")
 
     def test_buys_and_matches_functional(self):
         _bracket = RoundBrackets(1)
@@ -42,25 +42,25 @@ class TestMatchesAndBuys(unittest.TestCase):
         _roster.add_player(self.player_Joe)
         _bracket.set_round_roster(_roster)
         _bracket.set_buys_and_matches()
-        self.assertEqual(0, len(_bracket.Matches), "No matches if single player in bracket")
+        self.assertEqual(0, len(_bracket.matches), "No matches if single player in bracket")
 
         _roster.add_player(self.player_Jane)
         _roster.add_player(self.player_Will)
         _bracket.set_round_roster(_roster)
         _bracket.set_buys_and_matches()
 
-        self.assertEqual(2, len(_bracket.ActivePlayers), "Actives for 3 players")
-        self.assertEqual(1, len(_bracket.Buys), "Buys for 3 players")
-        self.assertEqual(1, len(_bracket.Matches), "Matches for 3 players")
+        self.assertEqual(2, len(_bracket.active_players), "Actives for 3 players")
+        self.assertEqual(1, len(_bracket.buys), "Buys for 3 players")
+        self.assertEqual(1, len(_bracket.matches), "Matches for 3 players")
 
         _roster.add_player(self.player_Margret)
         _bracket.set_buys_and_matches()
-        self.assertEqual(4, len(_bracket.ActivePlayers), "Actives for 4 players")
-        self.assertEqual(0, len(_bracket.Buys), "Buys for 4 players")
-        self.assertEqual(2, len(_bracket.Matches), "Matches for 4 players")
+        self.assertEqual(4, len(_bracket.active_players), "Actives for 4 players")
+        self.assertEqual(0, len(_bracket.buys), "Buys for 4 players")
+        self.assertEqual(2, len(_bracket.matches), "Matches for 4 players")
 
         _roster.add_player(self.player_Noa)
         _bracket.set_buys_and_matches()
-        self.assertEqual(2, len(_bracket.ActivePlayers), "Actives for 5 players")
-        self.assertEqual(3, len(_bracket.Buys), "Buys for 5 players")
-        self.assertEqual(1, len(_bracket.Matches), "Matches for 5 players")
+        self.assertEqual(2, len(_bracket.active_players), "Actives for 5 players")
+        self.assertEqual(3, len(_bracket.buys), "Buys for 5 players")
+        self.assertEqual(1, len(_bracket.matches), "Matches for 5 players")

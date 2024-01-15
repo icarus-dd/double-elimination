@@ -6,41 +6,42 @@ class Match:
     last_match_number = 0
 
     def __init__(self):
-        self.RoundNumber = 0
-        self.MatchNumber = 0
-        self.player1 = self.player2 = None
-        self.Winner = None
-        self.Loser = None
-        self.MatchDecided = False
+        self.round_number: int = 0
+        self.match_number: int = 0
+        self.player1: Player = None
+        self.player2: Player = None
+        self.winner: Player = None
+        self.loser: Player = None
+        self.match_decided: bool = False
 
     def set_match_players(self, round_number: int, player1: Player, player2: Player):
         self.player1 = player1
         self.player2 = player2
         Match.last_match_number += 1
-        self.MatchNumber = Match.last_match_number
-        self.RoundNumber = round_number
+        self.match_number = Match.last_match_number
+        self.round_number = round_number
 
     def set_match_results(self, winner: Player, loser: Player):
-        self.Winner = winner
-        self.Loser = loser
-        winner.tally_result(Player.resWIN, loser, self.RoundNumber, self.MatchNumber)
-        loser.tally_result(Player.resLOSS, loser, self.RoundNumber, self.MatchNumber)
-        self.MatchDecided = True
+        self.winner = winner
+        self.loser = loser
+        winner.tally_result(Player.resWIN, loser, self.round_number, self.match_number)
+        loser.tally_result(Player.resLOSS, loser, self.round_number, self.match_number)
+        self.match_decided = True
 
 class RoundBrackets:
 
     def __init__(self, RoundNumber: int):
-        self.BracketRoster: PlayerRoster = PlayerRoster()
-        self.ActivePlayers: list[Player] = []
-        self.Buys: list[Player] = []
-        self.Matches: list[Match] = []
-        self.ActiveRoundNumber: int = RoundNumber
+        self.bracket_roster: PlayerRoster = PlayerRoster()
+        self.active_players: list[Player] = []
+        self.buys: list[Player] = []
+        self.matches: list[Match] = []
+        self.active_round_number: int = RoundNumber
 
     def set_round_roster(self, roster: PlayerRoster):
-        self.BracketRoster = roster
-        self.ActivePlayers = PlayerRoster()
-        self.Buys = PlayerRoster()
-        self.Matches = []
+        self.bracket_roster = roster
+        self.active_players = PlayerRoster()
+        self.buys = PlayerRoster()
+        self.matches = []
 
     def set_buys_and_matches(self):
         # Set the buys so that removing them makes the active player count
@@ -49,38 +50,38 @@ class RoundBrackets:
         # if len(self.BracketRoster.Players) < 2:
         #     raise exceptions.BracketPlayerCount
 
-        self.ActivePlayers = []
-        self.Buys = []
-        self.Matches = []
+        self.active_players = []
+        self.buys = []
+        self.matches = []
 
         # Determine number of active players
         __n = 2
 
         # Perfect round
-        if not len(self.BracketRoster.Players) % 2:
-            __n = len(self.BracketRoster.Players)
+        if not len(self.bracket_roster.players) % 2:
+            __n = len(self.bracket_roster.players)
         else:
-            while __n < len(self.BracketRoster.Players):
+            while __n < len(self.bracket_roster.players):
                 __n = __n * 2
 
-        ___num_buys = __n - len(self.BracketRoster.Players)
-        ___num_active = len(self.BracketRoster.Players) - ___num_buys
+        ___num_buys = __n - len(self.bracket_roster.players)
+        ___num_active = len(self.bracket_roster.players) - ___num_buys
 
-        self.ActivePlayers = self.BracketRoster.Players[:___num_active:]
-        self.Buys = self.BracketRoster.Players[___num_active::]
+        self.active_players = self.bracket_roster.players[:___num_active:]
+        self.buys = self.bracket_roster.players[___num_active::]
 
         __pool = []
-        for __p in self.ActivePlayers:
+        for __p in self.active_players:
             __pool.append(__p)
 
         while len(__pool):
             __p1 = __pool.pop(0)
             __p2 = __pool.pop(0)
             __m = Match()
-            __m.set_match_players(self.ActiveRoundNumber, __p1, __p2)
-            self.Matches.append(__m)
+            __m.set_match_players(self.active_round_number, __p1, __p2)
+            self.matches.append(__m)
 
-        return self.ActivePlayers, self.Buys, self.Matches
+        return self.active_players, self.buys, self.matches
 
 
 class Round:

@@ -28,15 +28,15 @@ def populate_roster(ui):
 
     ui.emit("")
     ui.emit("Tournament Roster:")
-    for __i in range(0, len(__r.Players)):
-        ui.emit("%3d. %s" % (__i, __r.Players[__i].PlayerName))
+    for __i in range(0, len(__r.players)):
+        ui.emit("%3d. %s" % (__i, __r.players[__i].player_name))
     return __r
 
 
 def run_round_bracket(bracket: RoundBrackets):
-    for __match in bracket.Matches:
+    for __match in bracket.matches:
         ui.emit(" -> Match %s:  1: %s vs. 2: %s" %
-                (str(__match.MatchNumber).rjust(3), __match.player1.PlayerName, __match.player2.PlayerName)
+                (str(__match.match_number).rjust(3), __match.player1.player_name, __match.player2.player_name)
                 )
         __winner = None
         __loser = None
@@ -52,14 +52,14 @@ def run_round_bracket(bracket: RoundBrackets):
 
         for __p in __match.player1, __match.player2:
             __status = ''
-            if __p.PlayerBracket == Player.brktWINNER:
+            if __p.player_bracket == Player.brktWINNER:
                 __status = "advances in the Winner's Bracket"
-            elif __p.PlayerBracket == Player.brktELIMINATION:
+            elif __p.player_bracket == Player.brktELIMINATION:
                 __status = "advances in the Elimination Bracket"
             else:
                 __status = "is eliminated from the tournament. (Better luck next time!)"
 
-            ui.emit("      %s %s" % (__p.PlayerName, __status))
+            ui.emit("      %s %s" % (__p.player_name, __status))
 
 
 def run_current_round(tournament: Tournament(), ui):
@@ -69,7 +69,7 @@ def run_current_round(tournament: Tournament(), ui):
     ui.emit("+-------------------------------------------------+")
     ui.emit("| Beginning Winner's bracket, round %s, %s matches |" % (
         str(tournament.current_round_number()).rjust(3),
-        str(len(tournament.current_round.winners_bracket.Matches)).rjust(2)
+        str(len(tournament.current_round.winners_bracket.matches)).rjust(2)
     ))
     ui.emit("+-------------------------------------------------+")
     run_round_bracket(tournament.current_round.winners_bracket)
@@ -78,7 +78,7 @@ def run_current_round(tournament: Tournament(), ui):
     ui.emit("+----------------------------------------------------+")
     ui.emit("| Beginning Elimination bracket, round %s, %s matches |" % (
         str(tournament.current_round_number()).rjust(3),
-        str(len(tournament.current_round.winners_bracket.Matches)).rjust(2)
+        str(len(tournament.current_round.winners_bracket.matches)).rjust(2)
     ))
     ui.emit("+----------------------------------------------------+")
     run_round_bracket(tournament.current_round.elimination_bracket)

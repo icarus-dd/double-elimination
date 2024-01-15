@@ -28,7 +28,7 @@ class Tournament:
     def set_round(self):
         # One in each bracket: final round
         if (len(self.winner_roster) == 1 and len(self.elimination_roster) == 1):
-            self.winner_roster.add_player(self.elimination_roster.Players.pop())
+            self.winner_roster.add_player(self.elimination_roster.players.pop())
         if (len(self.winner_roster) == 2 and len(self.elimination_roster) == 0) or \
                 (len(self.winner_roster) == 1 and len(self.elimination_roster) == 1):
             self.is_final_round = True
