@@ -8,10 +8,10 @@ class Match:
     def __init__(self):
         self.round_number: int = 0
         self.match_number: int = 0
-        self.player1: Player = None
-        self.player2: Player = None
-        self.winner: Player = None
-        self.loser: Player = None
+        self.player1: Player | None = None
+        self.player2: Player | None = None
+        self.winner: Player | None = None
+        self.loser: Player | None = None
         self.match_decided: bool = False
 
     def set_match_players(self, round_number: int, player1: Player, player2: Player):
@@ -28,14 +28,15 @@ class Match:
         loser.tally_result(Player.resLOSS, loser, self.round_number, self.match_number)
         self.match_decided = True
 
+
 class RoundBrackets:
 
-    def __init__(self, RoundNumber: int):
+    def __init__(self, round_number: int):
         self.bracket_roster: PlayerRoster = PlayerRoster()
         self.active_players: list[Player] = []
         self.buys: list[Player] = []
         self.matches: list[Match] = []
-        self.active_round_number: int = RoundNumber
+        self.active_round_number: int = round_number
 
     def set_round_roster(self, roster: PlayerRoster):
         self.bracket_roster = roster
@@ -86,15 +87,15 @@ class RoundBrackets:
 
 class Round:
 
-    last_round_number = 0
+    round_number = 1
 
     def __init__(self):
-        self.winners_bracket = RoundBrackets(Round.last_round_number)
-        self.elimination_bracket = RoundBrackets(Round.last_round_number)
-        Round.last_round_number += 1
+        self.winners_bracket = RoundBrackets(Round.round_number)
+        self.elimination_bracket = RoundBrackets(Round.round_number)
+        Round.round_number += 1
 
     def set_bracket_rosters(self, winners: PlayerRoster, elimination: PlayerRoster):
-        self.winners_bracket = RoundBrackets()
+        self.winners_bracket = RoundBrackets(Round.round_number)
         self.winners_bracket.set_round_roster(winners)
-        self.elimination_bracket = RoundBrackets()
+        self.elimination_bracket = RoundBrackets(Round.round_number)
         self.elimination_bracket.set_round_roster(elimination)

@@ -13,15 +13,15 @@ class Player:
     resLOSS = 1
     resBUY = 0
 
-    # Brackets (This probably should be tracked elsewhere. tournement() ? )
+    # Brackets (This probably should be tracked elsewhere. tournament() ? )
     brktWINNER = 2
     brktELIMINATION = 1
     brktOUT = 0
 
     def __init__(self, player_name: str):
         self.player_name: str = player_name
-        self.player_bracket = None
-        self.player_record: list[dict] = [None]
+        self.player_bracket: int | None = None
+        self.player_record: list[dict] = []
 
     def __eq__(self, other):
         return self.player_name == other.player_name and \

@@ -62,7 +62,7 @@ class TestPlayerObject(unittest.TestCase):
             "Match": 6
         }
 
-        self.assertEqual(_expect, _roster.players[0].player_record[3], "Player results tallied.")
+        self.assertEqual(_expect, _roster.players[0].player_record[2], "Player results tallied.")
         self.assertEqual(_roster.players[0].player_bracket, _roster.players[0].brktELIMINATION,
                          "Bracket placement after loss")
 

@@ -7,12 +7,12 @@ class UI:
     def query(self, msg, add_linebreak=False, options=None):
         __msg = msg
         if options:
-            __msg += " ("
+            __msg += ' ('
             __msg += '/'.join(options.upper())
-            __msg += ") "
+            __msg += ') '
 
         if add_linebreak:
-            __msg += "\n"
+            __msg += '\n'
 
         result = input(__msg)
         if options:
